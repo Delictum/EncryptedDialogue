@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EncryptedDialogue.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="EncryptedDialogueStoreContainer">
+    <EntitySet Name="UserSet" EntityType="EncryptedDialogue.Store.UserSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DialogueSet" EntityType="EncryptedDialogue.Store.DialogueSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UserDialogue" Association="EncryptedDialogue.Store.UserDialogue">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Dialogue" EntitySet="DialogueSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserDialogue1" Association="EncryptedDialogue.Store.UserDialogue1">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Dialogue" EntitySet="DialogueSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DialogueSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateTime" Type="datetime" Nullable="false" />
+    <Property Name="RecipientId" Type="int" Nullable="false" />
+    <Property Name="SenderId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UserDialogue">
+    <End Role="User" Type="EncryptedDialogue.Store.UserSet" Multiplicity="1" />
+    <End Role="Dialogue" Type="EncryptedDialogue.Store.DialogueSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Dialogue">
+        <PropertyRef Name="RecipientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserDialogue1">
+    <End Role="User" Type="EncryptedDialogue.Store.UserSet" Multiplicity="1" />
+    <End Role="Dialogue" Type="EncryptedDialogue.Store.DialogueSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Dialogue">
+        <PropertyRef Name="SenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

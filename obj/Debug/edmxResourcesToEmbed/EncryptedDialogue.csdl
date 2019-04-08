@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="EncryptedDialogue" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="EncryptedDialogueContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="UserSet" EntityType="EncryptedDialogue.User" />
+    <EntitySet Name="DialogueSet" EntityType="EncryptedDialogue.Dialogue" />
+    <AssociationSet Name="UserDialogue" Association="EncryptedDialogue.UserDialogue">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Dialogue" EntitySet="DialogueSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserDialogue1" Association="EncryptedDialogue.UserDialogue1">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Dialogue" EntitySet="DialogueSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Login" Type="String" Nullable="false" />
+    <Property Name="Password" Type="String" Nullable="false" />
+    <NavigationProperty Name="RecipientDialogue" Relationship="EncryptedDialogue.UserDialogue" FromRole="User" ToRole="Dialogue" />
+    <NavigationProperty Name="SenderDialogue" Relationship="EncryptedDialogue.UserDialogue1" FromRole="User" ToRole="Dialogue" />
+  </EntityType>
+  <EntityType Name="Dialogue">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Message" Type="String" Nullable="false" />
+    <Property Name="DateTime" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="RecipientUser" Relationship="EncryptedDialogue.UserDialogue" FromRole="Dialogue" ToRole="User" />
+    <Property Name="RecipientId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SenderUser" Relationship="EncryptedDialogue.UserDialogue1" FromRole="Dialogue" ToRole="User" />
+    <Property Name="SenderId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="UserDialogue">
+    <End Type="EncryptedDialogue.User" Role="User" Multiplicity="1" />
+    <End Type="EncryptedDialogue.Dialogue" Role="Dialogue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Dialogue">
+        <PropertyRef Name="RecipientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserDialogue1">
+    <End Type="EncryptedDialogue.User" Role="User" Multiplicity="1" />
+    <End Type="EncryptedDialogue.Dialogue" Role="Dialogue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Dialogue">
+        <PropertyRef Name="SenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

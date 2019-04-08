@@ -1,0 +1,12 @@
+C:\Users\thedr\source\repos\EncryptdeDialogue\EncryptedDialogue\bin\Debug\EncryptedDialogue.dll.config
+C:\Users\thedr\source\repos\EncryptdeDialogue\EncryptedDialogue\bin\Debug\EncryptedDialogue.dll
+C:\Users\thedr\source\repos\EncryptdeDialogue\EncryptedDialogue\bin\Debug\EncryptedDialogue.pdb
+C:\Users\thedr\source\repos\EncryptdeDialogue\EncryptedDialogue\bin\Debug\EntityFramework.dll
+C:\Users\thedr\source\repos\EncryptdeDialogue\EncryptedDialogue\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\thedr\source\repos\EncryptdeDialogue\EncryptedDialogue\bin\Debug\EntityFramework.xml
+C:\Users\thedr\source\repos\EncryptdeDialogue\EncryptedDialogue\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\thedr\source\repos\EncryptdeDialogue\EncryptedDialogue\obj\Debug\EncryptedDialogue.csprojAssemblyReference.cache
+C:\Users\thedr\source\repos\EncryptdeDialogue\EncryptedDialogue\obj\Debug\EncryptedDialogue.csproj.CoreCompileInputs.cache
+C:\Users\thedr\source\repos\EncryptdeDialogue\EncryptedDialogue\obj\Debug\EncryptedDialogue.csproj.CopyComplete
+C:\Users\thedr\source\repos\EncryptdeDialogue\EncryptedDialogue\obj\Debug\EncryptedDialogue.dll
+C:\Users\thedr\source\repos\EncryptdeDialogue\EncryptedDialogue\obj\Debug\EncryptedDialogue.pdb

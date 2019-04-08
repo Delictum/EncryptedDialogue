@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EncryptedDialogue.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="EncryptedDialogueStoreContainer">
+    <EntitySet Name="UserSet" EntityType="EncryptedDialogue.Store.UserSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DialogueSet" EntityType="EncryptedDialogue.Store.DialogueSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UserDialogue" Association="EncryptedDialogue.Store.UserDialogue">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Dialogue" EntitySet="DialogueSet" />
+    </AssociationSet>
+    <AssociationSet Name="UserDialogue1" Association="EncryptedDialogue.Store.UserDialogue1">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="Dialogue" EntitySet="DialogueSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DialogueSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateTime" Type="datetime" Nullable="false" />
+    <Property Name="RecipientId" Type="int" Nullable="false" />
+    <Property Name="SenderId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UserDialogue">
+    <End Role="User" Type="EncryptedDialogue.Store.UserSet" Multiplicity="1" />
+    <End Role="Dialogue" Type="EncryptedDialogue.Store.DialogueSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Dialogue">
+        <PropertyRef Name="RecipientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserDialogue1">
+    <End Role="User" Type="EncryptedDialogue.Store.UserSet" Multiplicity="1" />
+    <End Role="Dialogue" Type="EncryptedDialogue.Store.DialogueSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Dialogue">
+        <PropertyRef Name="SenderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="EncryptedDialogue" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="EncryptedDialogueContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UserSet" EntityType="EncryptedDialogue.User" />
+          <EntitySet Name="DialogueSet" EntityType="EncryptedDialogue.Dialogue" />
+          <AssociationSet Name="UserDialogue" Association="EncryptedDialogue.UserDialogue">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Dialogue" EntitySet="DialogueSet" />
+          </AssociationSet>
+          <AssociationSet Name="UserDialogue1" Association="EncryptedDialogue.UserDialogue1">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="Dialogue" EntitySet="DialogueSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <NavigationProperty Name="RecipientDialogue" Relationship="EncryptedDialogue.UserDialogue" FromRole="User" ToRole="Dialogue" />
+          <NavigationProperty Name="SenderDialogue" Relationship="EncryptedDialogue.UserDialogue1" FromRole="User" ToRole="Dialogue" />
+        </EntityType>
+        <EntityType Name="Dialogue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message" Type="String" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="RecipientUser" Relationship="EncryptedDialogue.UserDialogue" FromRole="Dialogue" ToRole="User" />
+          <Property Name="RecipientId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SenderUser" Relationship="EncryptedDialogue.UserDialogue1" FromRole="Dialogue" ToRole="User" />
+          <Property Name="SenderId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="UserDialogue">
+          <End Type="EncryptedDialogue.User" Role="User" Multiplicity="1" />
+          <End Type="EncryptedDialogue.Dialogue" Role="Dialogue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Dialogue">
+              <PropertyRef Name="RecipientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserDialogue1">
+          <End Type="EncryptedDialogue.User" Role="User" Multiplicity="1" />
+          <End Type="EncryptedDialogue.Dialogue" Role="Dialogue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Dialogue">
+              <PropertyRef Name="SenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EncryptedDialogueStoreContainer" CdmEntityContainer="EncryptedDialogueContainer">
+    <EntitySetMapping Name="UserSet">
+      <EntityTypeMapping TypeName="IsTypeOf(EncryptedDialogue.User)">
+        <MappingFragment StoreEntitySet="UserSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DialogueSet">
+      <EntityTypeMapping TypeName="IsTypeOf(EncryptedDialogue.Dialogue)">
+        <MappingFragment StoreEntitySet="DialogueSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          <ScalarProperty Name="RecipientId" ColumnName="RecipientId" />
+          <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
